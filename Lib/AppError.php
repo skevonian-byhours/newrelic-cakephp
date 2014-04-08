@@ -18,6 +18,9 @@ class AppError
      */
     public static function handleError($code, $description, $file = null, $line = null, $context = null) {
         newrelic_notice_error($code);
+        newrelic_capture_params('on');
+        newrelic_add_custom_parameter('POST', print_r($_POST,true));
+        newrelic_add_custom_parameter('GET', print_r($_GET,true));
 
         return ErrorHandler::handleError(
             $code,
